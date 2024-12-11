@@ -129,3 +129,21 @@ cloudflared tunnel run my-tunnel
 - **Logs**: Use `cloudflared logs` for debugging.
 
 This setup ensures secure and efficient remote access to your local server without needing complex router configurations.
+
+### Commands
+
+```sh
+ cloudflared tunnel list
+ cloudflared tunnel run loony
+ cloudflared tunnel delete <name>
+ cloudflared tunnel route dns loony sankarboro.com
+ cloudflared tunnel route ip show
+ cloudflared tunnel route ip add 192.168.99.48/24 loony
+ cloudflared tunnel route ip delete <id>
+```
+
+### Important Links
+
+- https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#tab-panel-664
+- https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/linux/
+- https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/
