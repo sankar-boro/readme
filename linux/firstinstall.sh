@@ -19,6 +19,8 @@ ESSENTIAL_PACKAGES=(
     git \
     vim \
     unzip \
+    net-tools \
+    nginx \
     software-properties-common
 )
 for package in "${ESSENTIAL_PACKAGES[@]}"; do
