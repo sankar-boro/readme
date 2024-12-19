@@ -15,15 +15,3 @@ sudo apt-get update
 # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
 
 sudo apt-get -y install postgresql
-
-### Post installation
-
-```sh
-
-sudo -u postgres psql
-CREATE USER <username> WITH PASSWORD <password>;
-CREATE DATABASE <database-name>;
-GRANT ALL PRIVILEGES ON DATABASE <database-name> TO <user-name>;
-ALTER USER <user-name> WITH SUPERUSER;
-
-```
