@@ -21,8 +21,12 @@ ESSENTIAL_PACKAGES=(
     unzip \
     net-tools \
     nginx \
-    software-properties-common
+    software-properties-common \
+    libxml2-dev libncurses5-dev libsqlite3-dev uuid-dev libjansson-dev libssl-dev
 )
+
+sudo apt install -y build-essential wget curl 
+
 for package in "${ESSENTIAL_PACKAGES[@]}"; do
     if ! is_installed "$package"; then
         sudo apt install -y "$package"
