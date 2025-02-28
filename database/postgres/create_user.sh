@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 
 # Variables (edit these as needed)
-USERNAME="loremipsum"
-PASSWORD="loremipsum"
-DATABASE_NAME="loremipsum"
+USERNAME=$1
+PASSWORD=$2
+DATABASE_NAME=$3
 
 # Run PostgreSQL commands
 sudo -u postgres psql <<EOF
