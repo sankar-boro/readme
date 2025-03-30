@@ -16,7 +16,7 @@ PostgreSQL does not have separate concepts for users and groups; instead, it use
    - Equivalent to a database user in other systems.
    - Example:
      ```sql
-     CREATE ROLE user1 WITH LOGIN PASSWORD 'password123';
+     CREATE ROLE <username> WITH LOGIN PASSWORD <password>;
      ```
 
 2. **Group Roles (Groups)**
@@ -25,8 +25,8 @@ PostgreSQL does not have separate concepts for users and groups; instead, it use
    - Does not have login privileges by default.
    - Example:
      ```sql
-     CREATE ROLE developers;
-     GRANT developers TO user1;
+     CREATE ROLE <rolename>;
+     GRANT <rolename> TO <username>;
      ```
 
 3. **Superuser Role**
@@ -35,14 +35,14 @@ PostgreSQL does not have separate concepts for users and groups; instead, it use
    - Can bypass all permission checks.
    - Example:
      ```sql
-     CREATE ROLE admin WITH SUPERUSER LOGIN PASSWORD 'adminpass';
+     CREATE ROLE <username> WITH SUPERUSER LOGIN PASSWORD <password>;
      ```
 
 4. **Replication Role**
    - Used for **streaming replication**.
    - Example:
      ```sql
-     CREATE ROLE replicator WITH REPLICATION LOGIN PASSWORD 'replpass';
+     CREATE ROLE <rolename> WITH REPLICATION LOGIN PASSWORD <password>;
      ```
 
 ---
@@ -73,13 +73,13 @@ Use the `GRANT` command to assign privileges to roles.
 Example:
 
 ```sql
-GRANT SELECT, INSERT ON employees TO user1;
+GRANT SELECT, INSERT ON <tablename> TO <username>;
 ```
 
 To grant **all** privileges:
 
 ```sql
-GRANT ALL PRIVILEGES ON employees TO user1;
+GRANT ALL PRIVILEGES ON <tablename> TO <username>;
 ```
 
 ### **Revoking Privileges**
@@ -89,7 +89,7 @@ To remove privileges, use the `REVOKE` command.
 Example:
 
 ```sql
-REVOKE INSERT ON employees FROM user1;
+REVOKE INSERT ON <tablename> FROM <username>;
 ```
 
 ---
@@ -284,70 +284,6 @@ SELECT * FROM some_table;  -- Should work
 Let me know if you need modifications! 🚀
 
 PostgreSQL provides a robust security model using **roles, permissions, and privileges** to control access to databases, tables, and other objects. Below is a breakdown of how to effectively manage security in PostgreSQL.
-
----
-
-## **1. Roles in PostgreSQL**
-
-Roles in PostgreSQL are similar to users and groups. They can be assigned privileges and used to enforce security policies.
-
-- **User Roles** – Represent individual users that can log in (`LOGIN` privilege).
-- **Group Roles** – Act as groups to which multiple user roles can belong (no `LOGIN` privilege).
-- **Superusers** – Have unrestricted access to all database objects.
-
-### **Creating Roles**
-
-```sql
-CREATE ROLE developer;
-CREATE ROLE admin WITH LOGIN PASSWORD 'securepassword';
-```
-
-### **Granting and Revoking Roles**
-
-```sql
-GRANT developer TO user1;  -- Assign the "developer" role to user1
-REVOKE developer FROM user1;  -- Remove the role from user1
-```
-
----
-
-## **2. Privileges in PostgreSQL**
-
-Privileges determine what actions a role can perform on database objects. They are assigned using the `GRANT` command and removed using `REVOKE`.
-
-### **Common Privileges**
-
-| Privilege    | Description                             |
-| ------------ | --------------------------------------- |
-| `SELECT`     | Read access to a table/view             |
-| `INSERT`     | Add new rows to a table                 |
-| `UPDATE`     | Modify existing rows                    |
-| `DELETE`     | Remove rows                             |
-| `TRUNCATE`   | Remove all rows from a table            |
-| `REFERENCES` | Create foreign keys referencing a table |
-| `EXECUTE`    | Run functions or procedures             |
-| `USAGE`      | Access schemas, sequences, and domains  |
-| `CREATE`     | Create tables, indexes, or schemas      |
-| `CONNECT`    | Allow a user to connect to a database   |
-
----
-
-## **3. Granting and Revoking Privileges**
-
-### **Granting Permissions**
-
-```sql
-GRANT SELECT, INSERT ON employees TO developer;
-GRANT USAGE ON SCHEMA public TO developer;
-GRANT EXECUTE ON FUNCTION calculate_salary TO developer;
-```
-
-### **Revoking Permissions**
-
-```sql
-REVOKE INSERT ON employees FROM developer;
-REVOKE EXECUTE ON FUNCTION calculate_salary FROM developer;
-```
 
 ---
 
