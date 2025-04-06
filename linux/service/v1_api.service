@@ -1,0 +1,14 @@
+[Unit]
+Description=Loony Backend
+After=network.target
+
+[Service]
+ExecStart=/home/ubuntu/.bin/v1_api
+WorkingDirectory=/home/ubuntu
+Restart=always
+User=ubuntu
+Group=ubuntu
+EnvironmentFile=/home/ubuntu/.env/v1_api.env
+
+[Install]
+WantedBy=multi-user.target

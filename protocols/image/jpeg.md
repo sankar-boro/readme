@@ -172,3 +172,64 @@ Since the file is **only 1×1 pixel**, its compressed image data is **tiny**, li
 - **JPEG is lossy, meaning some information is lost during encoding.**
 
 Would you like me to generate an actual 1×1 JPEG file for you? 🚀
+
+Here's a visual representation of the beginning of a typical JPEG buffer in hexadecimal format with spaces for readability:
+
+```
+FF D8 FF E0  00 10  4A 46 49 46 00 01  01 01  00 48  00 48  00 00
+FF DB  00 43  00 08  06 06 07  06 05 08  07 07  07 09  09 08  0A  0C
+```
+
+### Breakdown of Each Hex Value:
+
+| Hex Values       | Meaning                                                                                             |
+| ---------------- | --------------------------------------------------------------------------------------------------- |
+| **FF D8**        | **Start of Image (SOI) marker** – Indicates the beginning of a JPEG file. Always `FF D8` for JPEGs. |
+| **FF E0**        | **APP0 marker** – Application-specific metadata block.                                              |
+| **00 10**        | **Length of APP0 segment** (16 bytes).                                                              |
+| **4A 46 49 46**  | "JFIF" in ASCII, indicating it's a JFIF-compliant JPEG.                                             |
+| **00**           | Null terminator for "JFIF" string.                                                                  |
+| **01 01**        | Major (1) and Minor (1) JFIF version numbers.                                                       |
+| **00**           | Units for X and Y densities (`00` = aspect ratio only, no explicit resolution).                     |
+| **48 00 48 00**  | X density (72 dpi) and Y density (72 dpi).                                                          |
+| **00 00**        | Thumbnail width and height (0, meaning no embedded thumbnail).                                      |
+| **FF DB**        | **Define Quantization Table (DQT) marker** – Contains compression settings.                         |
+| **00 43**        | Length of DQT segment (67 bytes).                                                                   |
+| **00**           | Precision and table identifier (0 = 8-bit precision, table 0).                                      |
+| **08 06 06 ...** | Actual quantization table values, which define image compression quality.                           |
+
+Yes! Here's a minimal **1×1 JPEG** image in hex format. You can copy this hex and convert it into a binary file to create an actual JPEG image.
+
+### **Hex Dump of a 1×1 JPEG (White Pixel)**
+
+```
+FF D8 FF E0 00 10 4A 46 49 46 00 01 01 01 00 48 00 48 00 00
+FF DB 00 43 00 08 06 06 07 06 05 08 07 07 07 09 09 08 0A 0C
+14 0D 0C 0B 0B 0C 19 12 13 0F 14 1D 1A 1F 1E 1D 1A 1C 1C 20
+24 2E 27 20 22 2C 23 1C 1C 28 37 29 2C 30 31 34 34 34 1F 27
+39 3D 38 32 3C 2E 33 34 32 FF C0 00 11 08 00 01 00 01 03 01
+22 00 02 11 01 03 11 01 FF C4 00 14 00 01 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 07 FF C4 00 14 10 01 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 07 FF DA 00 0C
+03 01 00 02 11 03 11 00 3F 00 F5 78 FF D9
+```
+
+### **Explanation of This JPEG**
+
+- **FF D8** → Start of Image (SOI).
+- **JFIF header** → Identifies it as a standard JPEG file.
+- **FF C0** → Start of Frame (SOF), defines dimensions (1×1 pixel).
+- **FF DB** → Quantization table (image compression settings).
+- **FF C4** → Huffman tables (used for encoding image data).
+- **FF DA** → Start of Scan (actual image data starts here).
+- **F5 78** → Encoded data for a white pixel.
+- **FF D9** → End of Image (EOI).
+
+### **How to Convert This to an Actual JPEG File**
+
+1. Copy the hex values into a file (e.g., `image.hex`).
+2. Convert it into a binary JPEG file using:
+   ```sh
+   xxd -r -p image.hex image.jpg
+   ```
+3. Open `image.jpg` and you should see a 1×1 white image.
