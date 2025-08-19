@@ -85,3 +85,22 @@ sudo apt update
 ```
 
 Now, PostgreSQL is completely removed from your system! 🚀
+
+```sh
+sudo systemctl stop postgresql
+sudo apt-get --purge remove postgresql\*
+sudo rm -rf /var/lib/postgresql/
+sudo rm -rf /etc/postgresql/
+sudo rm -rf /etc/postgresql-common/
+sudo deluser postgres
+sudo delgroup postgres
+sudo rm -rf /var/log/postgresql/
+which psql
+sudo rm /usr/bin/psql
+sudo apt-get autoremove
+sudo apt-get autoclean
+psql --version
+sudo rm -rf /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+
+```
